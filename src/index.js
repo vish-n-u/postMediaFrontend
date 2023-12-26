@@ -1,17 +1,43 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React, { createContext } from "react";
+import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import AuthPage from "./pages/authentication";
+import { createBrowserRouter, json, RouterProvider } from "react-router-dom";
+import reportWebVitals from "./reportWebVitals";
+import { ChakraProvider } from "@chakra-ui/react";
+import Home from "./pages/home";
+const root = createRoot(document.getElementById("root"));
+export const setupLogging = () => {
+  if (process.env.NODE_ENV === "production") {
+    // Override console methods with empty functions (hiding logs in production)
+    console.log = () => {};
+    console.warn = () => {};
+    console.error = () => {};
+    console.info = () => {};
+  }
+};
+setupLogging();
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+function userInfo() {
+  return localStorage.getItem("user");
+}
+
+const router = createBrowserRouter([
+  {
+    path: "/auth",
+    element: <AuthPage />,
+  },
+  {
+    path: "/",
+    element: <Home />,
+  },
+]);
+
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <ChakraProvider>
+      <RouterProvider router={router} />
+  </ChakraProvider>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
