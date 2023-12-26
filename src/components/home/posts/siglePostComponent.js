@@ -36,14 +36,14 @@ const SiglePostComponent = ({post,user}) => {
             whiteSpace="pre-line"
         />
         <Box w={"full"}mt={2}  borderTop={1} borderWidth={1} display={"flex"} flexDir={"column"}>
-            <Box display={"flex"}  w="full">
+            <Box display={"flex"}   w="full">
                 <BiLike color='blue' fill='blue' size={"20"} cursor={"pointer"} style={{marginLeft:"8px",marginRight:"18px",}}/>
-                <FaCommentAlt color={showCommentInput?"black":"blue"} onClick={handleCommentClick} fontVariant={"outline"}  cursor={"pointer"} size={"20"}/>
+                <FaCommentAlt color={showCommentInput?"black":"gray"} onClick={handleCommentClick} fontVariant={"outline"}  cursor={"pointer"} size={"20"}/>
             </Box>
                                 
         </Box>
-       {showCommentInput&& <Box mt={5} display={"flex"} >
-            <Avatar   mx={{lg:4,md:4,base:1}} name={user?.userName||"Err name"} src={user?.userPic} />
+       {showCommentInput&& <Box mt={5} alignItems={"center"} display={"flex"} >
+            <Avatar   mx={{lg:4,md:4,base:1}} name={user?.userName} src={user?.userPic} />
             {user?<Textarea onChange={(e)=>setComment(e.target.value)} value={comment} type='text' noOfLines={4} maxW={"full"} placeholder='write a comment' mx={{lg:4,md:4,base:1}} p={1}/>
               : <Link style={{w:"90%"}} to="/auth"><Button w={"full"} colorScheme='blue'>Sign In</Button>  </Link>
           }

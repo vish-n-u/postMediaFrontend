@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { createPostUrl, } from '../../../url'
 import { createPost } from '../../../helperFunctions/posts'
 
-const PostModel = ({isModelOpen,setIsModelOpen,user}) => {
+const PostModel = ({isModelOpen,setIsModelOpen,user,setPosts}) => {
    
   let { isOpen, onOpen, onClose } = useDisclosure()
   const [content,setContent] = useState("")
@@ -43,7 +43,7 @@ const PostModel = ({isModelOpen,setIsModelOpen,user}) => {
                     Close
                   </Button>
                   <Button isDisabled={content.length>10?false:true} onClick={()=>{
-                    createPost(content,setContent,isOpen,setIsModelOpen,Toast,user)
+                    createPost(content,setContent,isOpen,setIsModelOpen,Toast,user,setPosts)
                   }} colorScheme='blue'>Post</Button>
                 </ModalFooter>
               </ModalContent>

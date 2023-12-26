@@ -47,7 +47,7 @@ const Home = () => {
     <Box minH={"100vh"} bgColor={"gray.200"} display={"flex"} flexDir={"column"}>
         <Header user={user} setSearchText={setSearchText}/>
         {<Box bgColor={loading?"black":"none"} opacity={loading?"10%":""}>
-           <Post posts={posts} searchText={searchText} isModelOpen={isModelOpen} setIsModelOpen={setIsModelOpen} user={user}/>
+           <Post posts={posts} setPosts={setPosts} searchText={searchText} isModelOpen={isModelOpen} setIsModelOpen={setIsModelOpen} user={user}/>
            
            </Box>
            }

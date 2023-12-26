@@ -1,6 +1,6 @@
 import { createCommentsUrl, createPostUrl, getCommentsUrl } from "../url";
 
-export async function createPost(content,setContent,isOpen,setIsOpen,Toast,user){
+export async function createPost(content,setContent,isOpen,setIsOpen,Toast,user,setPosts){
 
     try{
       if(!content||content.length<10){
@@ -31,6 +31,7 @@ export async function createPost(content,setContent,isOpen,setIsOpen,Toast,user)
         isOpen =false
         setIsOpen(false)
         setContent("")
+        setPosts((prevPosts)=>[dataJson.message,...prevPosts])
       }
       else{
         

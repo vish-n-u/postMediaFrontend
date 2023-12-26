@@ -13,7 +13,7 @@ const PostBody = ({posts,user,searchText}) => {
             {
                 posts.map((post)=>{
                     console.log("post",post)
-                    return <SiglePostComponent key={post._id} post={post} user={user}/>
+                    return <SiglePostComponent   key={post._id} post={post} user={user}/>
                 }
                 
                 )
