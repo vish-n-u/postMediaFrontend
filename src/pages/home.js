@@ -107,5 +107,7 @@ async function getSearchResults(setPosts,searchText,lruCache,setLoading){
     setPosts(dataJson.message)}
     console.log(dataJson?.message)
 }
-catch(e){ console.log(e)}
+catch(e){
+  setLoading(false)
+  console.log(e)}
 }
