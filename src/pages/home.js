@@ -17,7 +17,8 @@ const Home = () => {
     const [loading,setLoading] = useState(false)
 
     useEffect(()=>{
-     fetchPosts(setPosts,setAllPost)
+      setLoading(true)
+     fetchPosts(setPosts,setAllPost,setLoading)
     },
     [])
     useEffect(()=>{
@@ -72,10 +73,11 @@ const Home = () => {
 export default Home
 
 
-async function fetchPosts(setPosts,setAllPost,){
+async function fetchPosts(setPosts,setAllPost,setLoading){
   try{
       let data = await fetch(getPostsUrl)
       let dataJson = await data.json()
+      setLoading(false)
      if(data.status==200) {
       let arr =dataJson.message.reverse()
       setPosts(arr)
