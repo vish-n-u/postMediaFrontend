@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 
 import { registerUrl } from "../../url";
+import { handleSubmitRegister } from "../../helperFunctions/auth";
 
 const Register = ({ setIndex }) => {
   const [name, setName] = useState("");
@@ -158,7 +159,7 @@ const Register = ({ setIndex }) => {
         isDisabled={isTrue() ? true : false}
         isLoading={loading}
         onClick={() => {
-          handleSubmit(
+          handleSubmitRegister(
             name,
             setName,
             email,
@@ -184,112 +185,5 @@ const Register = ({ setIndex }) => {
     </VStack>
   );
 };
-/**
- * Registers in the Guest User and handles success and failure scenarios.
- *@returns {Object} An object containing a message of the error (in case of failure) .
- * If register is successful, a success Toast is displayed.
- * If register fails because of some err, the err is added into th err State variable.
- *
- */
-async function handleSubmit(
-  name,
-  setName,
-  email,
-  setEmail,
-  password,
-  setPassword,
-  confirmPassword,
-  setConfirmPassword,
-  picture,
-  setPicture,
-  error,
-  setError,
-  triedEmail,
-  setTriedEmail,
-  setLoading,
-  setIndex,
-  Toast
-) {
-  setLoading(true);
-  // check if name is empty , if yes then show err
-  if (name === "") {
-    setError({ ...error, name: true });
-    setLoading(false);
-    return;
-  }
-  // check if email is incorrect or check whether it was tried earlier,if yes then show err
-  else if (
-    email === "" ||
-    /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email) === false
-  ) {
-    setError({ ...error, email: true });
-    setLoading(false);
-    return;
-  } // same as above
-  else if (password === "") {
-    setError({ ...error, password: true });
-    setLoading(false);
-    return;
-  } else if (password !== confirmPassword) {
-    setError({
-      ...error,
-      confirmPassword: "confirm password does not match your password.",
-    });
-    setPassword("");
-    setConfirmPassword("");
-    setLoading(false);
-    return;
-  } else {
-    // make a request to the server
-    const data = await fetch(registerUrl, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      mode: "cors",
-      body: JSON.stringify({
-        username: name,
-        email: email,
-        password: password,
-        pic: picture,
-      }),
-    });
-    const dataJson = await data.json();
-    setLoading(false);
 
-    if (data.status === 201) {
-      Toast({
-        status: "success",
-        title: "Registered successfully",
-        duration: 3000,
-      });
-
-      // setIndex(0);
-      localStorage.setItem("user", JSON.stringify(dataJson.message));
-
-      window.location.href ="/"
-    } else if (data.status === 400) {
-      if (dataJson.message.email) {
-        setError({ ...error, email: "Email already exists try logging in!" });
-        let arr = [...triedEmail];
-        arr.push(email); // makes sure that a call request is not sent
-        setTriedEmail(arr);
-        setEmail("");
-        Toast({
-          status: "error",
-          title: "Email Id already exists!", 
-          duration: 3000,
-        });
-      }
-      
-    } else if (data.status === 500) {
-      setLoading(false);
-      Toast({
-        status: "error",
-        title: "Internal server error",
-        duration: 3000,
-      });
-
-      return;
-    }
-  }
-}
 export default Register;

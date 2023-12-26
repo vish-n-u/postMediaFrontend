@@ -2,6 +2,7 @@ import { Avatar, Box, Button, Modal, ModalBody, ModalCloseButton, ModalContent,
   ModalFooter, ModalHeader, ModalOverlay, Text, Textarea, Toast, useDisclosure,useToast } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { createPostUrl, } from '../../../url'
+import { createPost } from '../../../helperFunctions/posts'
 
 const PostModel = ({isModelOpen,setIsModelOpen,user}) => {
    
@@ -55,56 +56,6 @@ const PostModel = ({isModelOpen,setIsModelOpen,user}) => {
 
 
 
-async function createPost(content,setContent,isOpen,setIsOpen,Toast,user){
 
-  try{
-    if(!content||content.length<10){
-      return Toast({
-        status: "warning",
-        title: "Content Cant be empty or less than 10 characters",
-        duration: 3000,
-        
-      })
-    }
-console.log("user",user.token,content)
-    const data = await fetch(createPostUrl,{
-      method :"POST",
-      mode: "cors",
-      headers:{
-        "Authorization": user.token,
-        "Content-Type": "application/json",
-      },
-      body:JSON.stringify({content})
-    })
-    const dataJson = await data.json();
-    if(data.status==201){
-      Toast({
-        status: "success",
-        title: "Created new post successfully",
-        duration: 3000,
-      });
-      isOpen =false
-      setIsOpen(false)
-      setContent("")
-    }
-    else{
-      
-    return Toast({
-      status: "error",
-      title: "Internal server error",
-      duration: 3000,
-    });
-    }
-  }
-  catch(e){
-    console.log(e);
-    return Toast({
-      status: "error",
-      title: "Internal server error",
-      duration: 3000,
-    });
-  }
-
-}
 
 export default PostModel
