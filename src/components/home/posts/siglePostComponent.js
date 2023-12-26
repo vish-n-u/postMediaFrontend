@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { FaCommentAlt } from "react-icons/fa";
 import { BiLike } from "react-icons/bi";
+import {Link} from "react-router-dom"
 import {Avatar, Box, Button, Input, Spinner, Text, Textarea, useToast} from "@chakra-ui/react"
 import Comment from '../comments/comment';
 import { createComment, getCommentById } from '../../../helperFunctions/posts';
@@ -36,14 +37,16 @@ const SiglePostComponent = ({post,user}) => {
         />
         <Box w={"full"}mt={2}  borderTop={1} borderWidth={1} display={"flex"} flexDir={"column"}>
             <Box display={"flex"}  w="full">
-                <BiLike size={"20"} cursor={"pointer"} style={{marginLeft:"8px",marginRight:"18px"}}/>
-                <FaCommentAlt onClick={handleCommentClick} fontVariant={"outline"}  cursor={"pointer"} size={"20"}/>
+                <BiLike color='blue' fill='blue' size={"20"} cursor={"pointer"} style={{marginLeft:"8px",marginRight:"18px",}}/>
+                <FaCommentAlt color={showCommentInput?"black":"blue"} onClick={handleCommentClick} fontVariant={"outline"}  cursor={"pointer"} size={"20"}/>
             </Box>
                                 
         </Box>
        {showCommentInput&& <Box mt={5} display={"flex"} >
             <Avatar   mx={{lg:4,md:4,base:1}} name={user?.userName||"Err name"} src={user?.userPic} />
-            <Textarea onChange={(e)=>setComment(e.target.value)} value={comment} type='text' noOfLines={4} maxW={"full"} placeholder='write a comment' mx={{lg:4,md:4,base:1}} p={1}/>
+            {user?<Textarea onChange={(e)=>setComment(e.target.value)} value={comment} type='text' noOfLines={4} maxW={"full"} placeholder='write a comment' mx={{lg:4,md:4,base:1}} p={1}/>
+              : <Link style={{w:"90%"}} to="/auth"><Button w={"full"} colorScheme='blue'>Sign In</Button>  </Link>
+          }
 
         </Box>}
         {showCommentInput&&comment?.length>0&&<Button isLoading={loading} onClick={()=>{
