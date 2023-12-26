@@ -45,7 +45,7 @@ const SiglePostComponent = ({post,user}) => {
        {showCommentInput&& <Box mt={5} alignItems={"center"} display={"flex"} >
             <Avatar   mx={{lg:4,md:4,base:1}} name={user?.userName} src={user?.userPic} />
             {user?<Textarea onChange={(e)=>setComment(e.target.value)} value={comment} type='text' noOfLines={4} maxW={"full"} placeholder='write a comment' mx={{lg:4,md:4,base:1}} p={1}/>
-              : <Link style={{w:"90%"}} to="/auth"><Button w={"full"} colorScheme='blue'>Sign In</Button>  </Link>
+              : <Link style={{w:"90%"}} to="/auth"><Button w={"full"} colorScheme='blue'>Sign In To Comment</Button>  </Link>
           }
 
         </Box>}
